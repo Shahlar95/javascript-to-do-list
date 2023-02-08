@@ -1,98 +1,191 @@
-//  let number1 = prompt();
-//  let number2 = prompt();
 
-//  let netice = number2**2/number1;
 
-//  if(Number.isInteger(netice)){
+let main = document.getElementsByClassName("main");
+let main2 = document.getElementsByClassName("main2");
+let input = document.getElementById("input");
+let btn = document.getElementById('btn');
+let lists = document.getElementById("list-box");
 
-//     console.log(netice);//  utf-16-ya  cevire bilmedim
-//  }else{
-//     console.log("netice alinmadi");
-//  }  
 
-// if(user == c){
 
-    //     alert("palindrom");
-    // }else{
-    //     alert("palindrom deyil");
-    // }
+
+eventListeners();
+
+function eventListeners() {
+
+    btn.addEventListener("click",addTodo);
+    document.addEventListener("DOMContentLoaded",refreshContentblock);
+    lists.addEventListener("click",deleteicon);
+    
+}
+
+// Localin yaradilmasi
+
+function createStorage() {
+    let todos;
+
+    if (localStorage.getItem("todos")===null) {//storageden todolari cekmek
+        todos = [];
+        
+    }else{
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+
+    return todos;
+    
+}
+
+// localda yeni elementin yaradilmasi
+
+function newlocalElement(newTodo) {
+    let todos = createStorage();
+    todos.push(newTodo);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    
+   
+}
+
+
+// yeni elementin ekranda yaazilmasi
+function addTodo(e) {
+    const newElement = input.value;
+
+    if(newElement === ""){
+
+        alert("hec bir element daxil etmemisiniz...");
+    }else{
+
+
+        addlistElement(newElement);
+        newlocalElement(newElement);
+        
+
+    }
+}
+
+
+// elave olunmush list elementin 
+function addlistElement(newTodo) {
+
+    let listElement = document.createElement("li");
+    let icon = document.createElement("i");
+    icon.className ="fa-solid fa-xmark";
+    listElement.append(document.createTextNode(newTodo));
+    listElement.appendChild(icon);
+    lists.append(listElement);
     
 
-    // Palindrom helli
+    
+    input.value = "";
+}
 
-//     let user = prompt();
 
-// function funksiya(a){
+// refreshden sonra localda olan elementlerin ekranda qalmasi
 
-//     const say = user.length;
+function refreshContentblock() {
+    let todos = createStorage();
+    todos.forEach(function(todo){
 
-//     for(a=0; a<say/2; a++){
+        addlistElement(todo);
+    })
+}
 
-//         if(user[a] !== user[say-1-a]){
 
-//             alert("palindrom deyil");
-//             break;
-//         }
-//         else {alert("palindromdur");
-//     break;}
-//     }
+function deleteicon(e) {
+
+    if(e.target.className === "fa-solid fa-xmark"){
+
+        e.target.parentElement.remove();
+        deleteStorage(e.target.parentElement.textContent);
+        
+
+
+    
+}
+
+}
+
+// localdan icon vasitsile silmek
+
+function deleteStorage(deletelistelement){
+
+    let selectStroage = createStorage();
+
+    selectStroage.forEach(function(searchelement,index){
+        if(searchelement === deletelistelement){
+
+            selectStroage.splice(index,1);
+        }
+
+    });
+
+    localStorage.setItem("todos",JSON.stringify(selectStroage));
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  listArr.forEach(e=>{
+//         let listElement = document.createElement("li");
+//         let x=input.value;
+//         listElement.textContent =e.x;
+//         let icon = document.createElement("i");
+//         icon.className ="fa-solid fa-xmark";
+//         listElement.append(icon);
+//         lists.append(listElement);
+        
+//          icon.addEventListener("click",()=>{
+
+//             listElement.remove();
+            
+
+
+
+
+
+
+
+
+
+
+
+// btn.addEventListener("click",()=>{
+
+//           let listArr=JSON.parse(localStorage.getItem("lists"));
+//           let newobj =  {data:input.value};
+//           localStorage.setItem("lists",JSON.stringify([...listArr,newobj]));
+      
+
+  
+
+    
+//    
+           
+    
+//          })
+//     })
+
+//         input.value="";
+
+        
+// })
+
+
+
+
+
 
    
-    
-// }
-
-
-// let value = funksiya(user);
-
-
-// daxil olunan a.e,u herflerini * evezlemek
-
-let text = prompt();
-
-let text1 = text.split("");
-
-
-let b = text1.replaceAll("a","*").c.d;
-let c = text1.replaceAll("e","*");
-let d = text1.replaceAll("u","*");
-
-console.log(b);
-
-
-
-
-
-// ekob ve ebob taski 
-
-// let x = prompt();
-// let y = prompt();
-
-// function Ekob_Ebob(x, y) {
-//     if ((typeof x !== 'number') || (typeof y !== 'number')) 
-//       return false;
-//     x = Math.abs(x);
-//     y = Math.abs(y);
-//     while(y) {
-//       var t = y;
-//       y = x % y;
-//       x = t;
-//     }
-//     return x;
-//   }
-
-
-//   console.log(Ekob_Ebob(x,y));
-
-
-
-// temperator taski
-
-// let c = prompt("temperator C-ile");
-
-// let f = c*9/5+32;
-
-// let k = (f+459.67)*5/9;
-
-// console.log(f + " Farenheyt");
-// console.log(k + " Kelvin");
+   
 
